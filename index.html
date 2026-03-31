@@ -2,10 +2,12 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>D&D Translator</title>
+<title>D&D Переводчик</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <style>
     :root { --accent: #ff2a2a; }
+    @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+Symbols+2&display=swap');
+
     body {
         background: black;
         color: #ff2a2a;
@@ -16,39 +18,30 @@
         background-position: center;
         margin: 0;
         min-height: 100vh;
-        overflow-x: hidden;
+        overflow-y: auto;
         display: flex;
         flex-direction: column;
         transition: background 1.2s ease-in-out;
     }
-    .header {
-        position: absolute;
-        top: 12px;
-        left: 15px;
-        z-index: 30;
-        color: #ddd;
-        font-size: 13px;
-        text-align: left;
-        background: rgba(0,0,0,0.75);
-        padding: 6px 12px;
-        border: 1px solid #550000;
-        border-radius: 4px;
+    .header { 
+        position: absolute; top: 12px; left: 15px; z-index: 30; 
+        color: #ddd; font-size: 13px; text-align: left; 
+        background: rgba(0,0,0,0.75); padding: 6px 12px; 
+        border: 1px solid #550000; border-radius: 4px; 
     }
     .header a { color: #ff2a2a; text-decoration: none; }
     .header a:hover { color: #ff8800; }
-    h2 {
-        margin: 0 0 8px 0;
-        font-size: 24px;
-        color: #ff4400;
-        text-shadow: 0 0 10px #ff0000;
+
+    h2 { 
+        margin: 60px 0 20px 0; 
+        font-size: 28px; 
+        color: #ff4400; 
+        text-shadow: 0 0 12px #ff0000; 
     }
 
-    .buttons {
-        display: flex;
-        flex-wrap: wrap;
-        justify-content: center;
-        gap: 8px;
-        margin: 12px 0 16px 0;
+    .buttons { 
+        display: flex; flex-wrap: wrap; justify-content: center; 
+        gap: 8px; margin: 15px 0 20px 0; 
     }
     button {
         padding: 10px 14px;
@@ -56,13 +49,11 @@
         color: #ff2a2a;
         border: 1px solid #ff2a2a;
         cursor: pointer;
-        font-size: 14px;
+        font-size: 15px;
         border-radius: 4px;
         transition: all 0.3s ease;
-        flex: 1 1 auto;
-        min-width: 140px;
     }
-    button:hover { background: #330000; box-shadow: 0 0 8px #ff4400; }
+    button:hover { background: #330000; box-shadow: 0 0 10px #ff4400; }
 
     .dropdown { position: relative; }
     .dropdown-content {
@@ -80,73 +71,61 @@
         border-bottom: 1px solid #440000;
         text-align: left;
         padding: 10px 14px;
-        font-size: 14px;
+        font-size: 15px;
     }
     .dropdown:hover .dropdown-content { display: block; }
 
     textarea {
-        width: 100%;
-        max-width: 760px;
-        height: 110px;
-        font-size: 17px;
-        padding: 12px;
-        background: rgba(0,0,0,0.85);
-        color: #ff4444;
-        border: 1px solid #660000;
-        margin: 10px auto 16px;
-        border-radius: 6px;
-        resize: none;
+        width: 92%; max-width: 760px; height: 110px;
+        font-size: 17px; padding: 12px;
+        background: rgba(0,0,0,0.85); color: #ff4444;
+        border: 1px solid #660000; margin: 10px auto 15px;
+        border-radius: 6px; resize: vertical;
     }
 
     .output {
         margin: 10px auto;
-        width: 100%;
-        max-width: 760px;
-        min-height: 160px;
-        overflow-y: auto;
-        font-size: 24px;
-        letter-spacing: 2px;
-        text-align: left;
-        padding: 16px;
+        width: 92%; max-width: 760px; min-height: 140px;
+        overflow-y: auto; font-size: 26px; letter-spacing: 2px;
+        text-align: left; padding: 16px;
         background: rgba(0,0,0,0.82);
-        border: 1px solid #770000;
-        border-radius: 6px;
+        border: 1px solid #770000; border-radius: 6px;
         line-height: 1.45;
         text-shadow: 0 2px 12px #000;
-        transition: all 0.7s ease;
+        font-family: 'Noto Sans Symbols 2', Arial, sans-serif;
     }
 
     .reading, .info {
         margin: 10px auto;
         color: #ffffff;
         text-shadow: 0 0 12px #000;
-        transition: all 0.4s ease;
         max-width: 760px;
     }
-    .reading { font-size: 16px; }
-    .info { font-size: 14px; }
+    .reading { font-size: 16.5px; }
+    .info { font-size: 14.5px; }
+
+    .controls { margin: 15px 0; }
+    .controls button { margin: 0 6px; }
 
     .table {
-        margin: 16px auto;
+        margin: 20px auto;
         display: grid;
-        gap: 8px;
-        max-width: 760px;
+        gap: 10px;
+        max-width: 800px;
         background: rgba(20,0,0,0.45);
-        padding: 14px;
+        padding: 16px;
         border: 1px solid #550000;
         border-radius: 8px;
-        width: 100%;
-        transition: all 0.6s ease;
+        width: 92%;
     }
-
     .cell {
-        height: 68px;
+        height: 72px;
         border: 1px solid #555;
         display: flex;
         flex-direction: column;
         justify-content: center;
         align-items: center;
-        font-size: 11px;
+        font-size: 12px;
         background: rgba(30,0,0,0.8);
         border-radius: 6px;
         transition: all 0.35s ease;
@@ -158,8 +137,12 @@
     }
     .cell.visible { opacity: 1; transform: translateY(0) scale(1); }
     .cell:hover { transform: scale(1.08); box-shadow: 0 0 15px currentColor; }
-    .cell span:first-child { font-size: 13px; opacity: 0.85; }
-    .cell span.glyph { font-size: 24px; margin-top: 4px; }
+    .cell span:first-child { font-size: 13.5px; opacity: 0.9; }
+    .cell span.glyph {
+        font-size: 26px;
+        margin-top: 4px;
+        font-family: 'Noto Sans Symbols 2', Arial, sans-serif;
+    }
 
     /* ====================== ЦВЕТА И АНИМАЦИИ ====================== */
     .infernal .glyph, .output.infernal { color: #ff6600; text-shadow: 0 0 14px #ff3300; animation: infernalFlicker 2.2s infinite alternate; }
@@ -189,25 +172,16 @@
     @keyframes thiefShadow { 0%,100% { text-shadow: 0 0 12px #ccaa44; } 50% { text-shadow: 0 0 24px #ffdd77; } }
     @keyframes deepPulse { 0%,100% { opacity: 1; } 50% { opacity: 0.9; } }
 
-    .table.alphabet-normal { grid-template-columns: repeat(auto-fit, minmax(48px, 1fr)); }
+    .table.alphabet-normal { grid-template-columns: repeat(auto-fit, minmax(54px, 1fr)); }
     .table.alphabet-thief { grid-template-columns: repeat(auto-fit, minmax(110px, 1fr)); }
 
-    /* ====================== АДАПТИВНОСТЬ ДЛЯ ТЕЛЕФОНОВ ====================== */
-    @media (max-width: 600px) {
-        h2 { font-size: 20px; }
-        button { font-size: 13px; padding: 9px 12px; min-width: 120px; }
-        textarea { height: 100px; font-size: 16px; }
-        .output { font-size: 21px; padding: 12px; min-height: 140px; }
-        .reading { font-size: 15px; }
-        .info { font-size: 13px; }
-        .cell { height: 58px; }
-        .cell span.glyph { font-size: 21px; }
-        .buttons { gap: 6px; margin: 10px 0 12px 0; }
-    }
-
-    @media (max-width: 400px) {
-        .buttons { flex-direction: column; align-items: center; }
-        button { width: 90%; max-width: 280px; }
+    @media (max-width: 640px) {
+        .table { gap: 8px; padding: 12px; }
+        .cell { height: 68px; }
+        .cell span.glyph { font-size: 24px; }
+        textarea { height: 95px; font-size: 16px; }
+        .output { font-size: 23px; min-height: 130px; }
+        h2 { font-size: 24px; margin-top: 50px; }
     }
 </style>
 </head>
@@ -217,6 +191,7 @@
         💲 <a href="https://pay.cloudtips.ru/p/dfc6c2f5" target="_blank">Поддержать автора</a>
     </div>
     <h2>🔥 D&amp;D Переводчик</h2>
+
     <div class="buttons">
         <div class="dropdown">
             <button>Инфернальный ▾</button>
@@ -249,18 +224,22 @@
         <button onclick="setMode('celestial')">Небесный</button>
         <button onclick="setMode('thief')">Воровской жаргон</button>
     </div>
+
     <textarea id="input" oninput="convert()" placeholder="Введите текст на русском или глифы..."></textarea>
     <div class="output" id="output"></div>
     <div class="reading" id="reading"></div>
     <div class="info" id="info"></div>
+
     <div class="controls">
         <button onclick="copyText()">📋 Скопировать перевод</button>
         <button onclick="clearAll()">🗑 Очистить</button>
     </div>
+
     <div class="table" id="alphabet"></div>
 
 <script>
     let mode = "infernal";
+
     const backgrounds = {
         infernal: "inferno.jpg", abyssal: "abyss.jpg",
         dwarf: "dwarf.jpg", giant: "giant.jpg", gnome: "gnome.jpg",
@@ -270,7 +249,8 @@
         thief: "thief.jpg"
     };
 
-    const thiefWords = [ /* ... твой воровской жаргон без изменений ... */ 
+    /* ВОРОВСКОЙ ЖАРГОН */
+    const thiefWords = [
         {ru:"золото", cant:"железо", glyph:"⌘"},{ru:"серебро", cant:"камень", glyph:"⌫"},
         {ru:"отмычки", cant:"палки", glyph:"⌬"},{ru:"яд", cant:"масло", glyph:"⌭"},
         {ru:"кинжал", cant:"столовый прибор", glyph:"⌮"},{ru:"ограбить", cant:"чистка", glyph:"⌯"},
@@ -287,7 +267,6 @@
         {ru:"ранить", cant:"боком", glyph:"⍄"},{ru:"казнить", cant:"танец", glyph:"⍅"},
         {ru:"добыча", cant:"берлога", glyph:"⍆"},{ru:"магический предмет", cant:"кусок железа", glyph:"⍇"}
     ];
-
     const thiefDictionary = {};
     const glyphToRu = {};
     thiefWords.forEach(item => {
@@ -296,21 +275,22 @@
     });
 
     /* ==================== ГЛИФЫ ==================== */
-    const infernalGlyphs = {а:"𝔄",б:"𝔅",в:"𝔙",г:"𝔊",д:"𝔇",е:"𝔈",ё:"𝔈̇",ж:"𝔍",з:"𝔷",и:"𝔦",й:"𝔦̇",к:"𝔎",л:"𝔏",м:"𝔐",н:"𝔑",о:"𝔒",п:"𝔓",р:"𝔯",с:"𝔖",т:"𝔗",у:"𝔘",ф:"𝔉",х:"𝔛",ц:"𝔠",ч:"𝔠̇",ш:"𝔖̇",щ:"𝔖̈",ъ:"𝔗̇",ы:"𝔜",ь:"𝔗̈",э:"𝔈̇",ю:"𝔘̇",я:"𝔄̇"};
-    const dwarfGlyphs = {а:"ᚨ",б:"ᛒ",в:"ᚹ",г:"ᚷ",д:"ᛞ",е:"ᛖ",ё:"ᛟ",ж:"ᛃ",з:"ᛉ",и:"ᛁ",й:"ᛇ",к:"ᚲ",л:"ᛚ",м:"ᛗ",н:"ᚾ",о:"ᛟ",п:"ᛈ",р:"ᚱ",с:"ᛊ",т:"ᛏ",у:"ᚢ",ф:"ᚠ",х:"ᚺ",ц:"ᛋ",ч:"ᛍ",ш:"ᛎ",щ:"ᛯ",ъ:"ᛪ",ы:"ᛦ",ь:"ᛧ",э:"ᛠ",ю:"ᛡ",я:"ᛣ"};
-    const elfGlyphs = {а:"Ϟ",б:"ϟ",в:"Ϡ",г:"ϡ",д:"Ϣ",е:"ϣ",ё:"Ϥ",ж:"ϥ",з:"Ϧ",и:"ϧ",й:"Ϩ",к:"ϩ",л:"Ϫ",м:"ϫ",н:"Ϭ",о:"ϭ",п:"Ϯ",р:"ϯ",с:"ϰ",т:"ϱ",у:"ϲ",ф:"ϳ",х:"ϴ",ц:"ϵ",ч:"϶",ш:"Ϸ",щ:"ϸ",ъ:"Ϲ̇",ы:"Ϲ",ь:"Ϲ̈",э:"Ϻ",ю:"ϻ",я:"ϼ"};
-    
-    const dragonGlyphs = {
-        а:"𒀀", б:"𒀁", в:"𒀂", г:"𒀃", д:"𒀄", е:"𒀅", ё:"𒀆",
-        ж:"𒀇", з:"𒀈", и:"𒀉", й:"𒀊", к:"𒀋", л:"𒀌", м:"𒀍",
-        н:"𒀎", о:"𒀏", п:"𒀐", р:"𒀑", с:"𒀒", т:"𒀓", у:"𒀔",
-        ф:"𒀕", х:"𒀖", ц:"𒀗", ч:"𒀘", ш:"𒀙", щ:"𒀚", ъ:"𒀛",
-        ы:"𒀜", ь:"𒀝", э:"𒀞", ю:"𒀟", я:"𒀠"
+    const infernalGlyphs = {
+        а:"𝔄", б:"𝔅", в:"𝔙", г:"𝔊", д:"𝔇", е:"𝔈", ё:"𝔼", ж:"𝔍", з:"𝔷", и:"𝔦", й:"𝕀",
+        к:"𝔎", л:"𝔏", м:"𝔐", н:"𝔑", о:"𝔒", п:"𝔓", р:"𝔯", с:"𝔖", т:"𝔗", у:"𝔘",
+        ф:"𝔉", х:"𝔛", ц:"𝔠", ч:"ℭ", ш:"𝕊", щ:"𝕊", ъ:"𝕋", ы:"𝕐", ь:"𝕋", э:"𝔼", ю:"𝕌", я:"𝔄"
     };
 
-    const celestialGlyphs = {а:"𐡀",б:"𐡁",в:"𐡅",г:"𐡂",д:"𐡃",е:"𐡄",ё:"𐡄̇",ж:"𐡆",з:"𐡈",и:"𐡉",й:"𐡉̇",к:"𐡊",л:"𐡋",м:"𐡌",н:"𐡍",о:"𐡏",п:"𐡐",р:"𐡓",с:"𐡔",т:"𐡕",у:"𐡖",ф:"𐡗",х:"𐡘",ц:"𐡙",ч:"𐡚",ш:"𐡔̇",щ:"𐡔̈",ъ:"𐡛̇",ы:"𐡛",ь:"𐡛̈",э:"𐡄̈",ю:"𐡖̈",я:"𐡀̇"};
+    const dwarfGlyphs = {а:"ᚨ",б:"ᛒ",в:"ᚹ",г:"ᚷ",д:"ᛞ",е:"ᛖ",ё:"ᛟ",ж:"ᛃ",з:"ᛉ",и:"ᛁ",й:"ᛇ",к:"ᚲ",л:"ᛚ",м:"ᛗ",н:"ᚾ",о:"ᛟ",п:"ᛈ",р:"ᚱ",с:"ᛊ",т:"ᛏ",у:"ᚢ",ф:"ᚠ",х:"ᚺ",ц:"ᛋ",ч:"ᛍ",ш:"ᛎ",щ:"ᛯ",ъ:"ᛪ",ы:"ᛦ",ь:"ᛧ",э:"ᛠ",ю:"ᛡ",я:"ᛣ"};
+    const elfGlyphs = {а:"Ϟ",б:"ϟ",в:"Ϡ",г:"ϡ",д:"Ϣ",е:"ϣ",ё:"Ϥ",ж:"ϥ",з:"Ϧ",и:"ϧ",й:"Ϩ",к:"ϩ",л:"Ϫ",м:"ϫ",н:"Ϭ",о:"ϭ",п:"Ϯ",р:"ϯ",с:"ϰ",т:"ϱ",у:"ϲ",ф:"ϳ",х:"ϴ",ц:"ϵ",ч:"϶",ш:"Ϸ",щ:"ϸ",ъ:"Ϲ̇",ы:"Ϲ",ь:"Ϲ̈",э:"Ϻ",ю:"ϻ",я:"ϼ"};
+    const dragonGlyphs = {а:"𒀀", б:"𒀁", в:"𒀂", г:"𒀃", д:"𒀄", е:"𒀅", ё:"𒀆", ж:"𒀇", з:"𒀈", и:"𒀉", й:"𒀊", к:"𒀋", л:"𒀌", м:"𒀍", н:"𒀎", о:"𒀏", п:"𒀐", р:"𒀑", с:"𒀒", т:"𒀓", у:"𒀔", ф:"𒀕", х:"𒀖", ц:"𒀗", ч:"𒀘", ш:"𒀙", щ:"𒀚", ъ:"𒀛", ы:"𒀜", ь:"𒀝", э:"𒀞", ю:"𒀟", я:"𒀠"};
 
-    /* ==================== REVERSE ==================== */
+    const celestialGlyphs = {
+        а:"𐡀", б:"𐡁", в:"𐡅", г:"𐡂", д:"𐡃", е:"𐡄", ё:"𝔼", ж:"𐡆", з:"𐡈", и:"𐡉", й:"𝕀",
+        к:"𐡊", л:"𐡋", м:"𐡌", н:"𐡍", о:"𐡏", п:"𐡐", р:"𐡓", с:"𐡔", т:"𐡕", у:"𐡖",
+        ф:"𐡗", х:"𐡘", ц:"𐡙", ч:"ℭ", ш:"𝕊", щ:"𝕊", ъ:"𝕋", ы:"𝕐", ь:"𝕋", э:"𝔼", ю:"𝕌", я:"𝔄"
+    };
+
     function reverse(obj) {
         let r = {};
         for (let k in obj) r[obj[k]] = k;
@@ -350,12 +330,11 @@
             output.style.opacity = "1";
             buildAlphabet();
             convert();
-            setTimeout(() => { alphabet.style.opacity = "1"; }, 150);
-        }, 400);
+            setTimeout(() => { alphabet.style.opacity = "1"; }, 200);
+        }, 300);
     }
 
     function convert() {
-        // (весь код convert без изменений)
         let input = document.getElementById("input").value.trim();
         if (mode === "thief") {
             let outputText = input;
@@ -443,7 +422,7 @@
         container.className = "table";
 
         if (mode === "deep") {
-            container.innerHTML = '<p style="color:#666; font-size:18px; padding:30px; grid-column:1/-1;">У глубинной речи нет письменности</p>';
+            container.innerHTML = '<p style="color:#666; font-size:18px; padding:40px; grid-column:1/-1;">У глубинной речи нет письменности</p>';
             return;
         }
 
@@ -461,7 +440,7 @@
         items.forEach((item, i) => {
             let cell = document.createElement("div");
             cell.className = `cell ${mode}`;
-            cell.style.animationDelay = (i * 28) + "ms";
+            cell.style.animationDelay = (i * 25) + "ms";
 
             if (isThief) {
                 cell.innerHTML = `<b>${item.ru}</b><br>→ ${item.cant}<span class="glyph">${item.glyph}</span>`;
@@ -474,7 +453,6 @@
                 cell.innerHTML = `<span>${item.toUpperCase()}</span><span class="glyph">${glyphsMap[item]}</span>`;
                 cell.onclick = () => { document.getElementById("input").value += glyphsMap[item]; convert(); };
             }
-
             container.appendChild(cell);
             setTimeout(() => cell.classList.add("visible"), 30);
         });
