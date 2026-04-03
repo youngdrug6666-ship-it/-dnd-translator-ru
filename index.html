@@ -16,6 +16,7 @@
         font-family: Arial, sans-serif;
         background-size: cover;
         background-position: center;
+        background-attachment: fixed;
         margin: 0;
         min-height: 100vh;
         overflow-y: auto;
@@ -93,16 +94,30 @@
         line-height: 1.45;
         text-shadow: 0 2px 12px #000;
         font-family: 'Noto Sans Symbols 2', Arial, sans-serif;
+        direction: ltr !important;
+        unicode-bidi: plaintext;
     }
 
-    .reading, .info {
-        margin: 10px auto;
+    .info-box {
+        margin: 12px auto;
+        max-width: 760px;
+        background: rgba(0,0,0,0.75);
+        border: 1px solid #770000;
+        border-radius: 6px;
+        padding: 10px 14px;
+        font-size: 14.5px;
+        color: #ffffff;
+        text-shadow: 0 0 8px #000;
+        display: inline-block;
+    }
+
+    .reading {
+        margin: 8px auto;
+        font-size: 16.5px;
         color: #ffffff;
         text-shadow: 0 0 12px #000;
         max-width: 760px;
     }
-    .reading { font-size: 16.5px; }
-    .info { font-size: 14.5px; }
 
     .controls { margin: 15px 0; }
     .controls button { margin: 0 6px; }
@@ -228,7 +243,7 @@
     <textarea id="input" oninput="convert()" placeholder="Введите текст на русском или глифы..."></textarea>
     <div class="output" id="output"></div>
     <div class="reading" id="reading"></div>
-    <div class="info" id="info"></div>
+    <div class="info-box" id="info"></div>
 
     <div class="controls">
         <button onclick="copyText()">📋 Скопировать перевод</button>
@@ -276,9 +291,9 @@
 
     /* ==================== ГЛИФЫ ==================== */
     const infernalGlyphs = {
-        а:"𝔄", б:"𝔅", в:"𝔙", г:"𝔊", д:"𝔇", е:"𝔈", ё:"𝔼", ж:"𝔍", з:"𝔷", и:"𝔦", й:"𝕀",
-        к:"𝔎", л:"𝔏", м:"𝔐", н:"𝔑", о:"𝔒", п:"𝔓", р:"𝔯", с:"𝔖", т:"𝔗", у:"𝔘",
-        ф:"𝔉", х:"𝔛", ц:"𝔠", ч:"ℭ", ш:"𝕊", щ:"𝕊", ъ:"𝕋", ы:"𝕐", ь:"𝕋", э:"𝔼", ю:"𝕌", я:"𝔄"
+        а:"𐌰", б:"𐌱", в:"𐌲", г:"𐌳", д:"𐌴", е:"𐌵", ё:"ꯕ", ж:"𐌶", з:"𐌷", и:"𐌸", й:"ꯌ",
+        к:"𐌺", л:"𐌻", м:"𐌼", н:"𐌽", о:"𐌾", п:"𐌿", р:"𐍀", с:"𐍁", т:"𐍂", у:"𐍃",
+        ф:"𐍄", х:"𐍅", ц:"𐍆", ч:"𐍇", ш:"𐍈", щ:"𐍉", ъ:"𐍊", ы:"ꯁ", ь:"ꯂ", э:"ꯃ", ю:"ꯄ", я:"ꯅ"
     };
 
     const dwarfGlyphs = {а:"ᚨ",б:"ᛒ",в:"ᚹ",г:"ᚷ",д:"ᛞ",е:"ᛖ",ё:"ᛟ",ж:"ᛃ",з:"ᛉ",и:"ᛁ",й:"ᛇ",к:"ᚲ",л:"ᛚ",м:"ᛗ",н:"ᚾ",о:"ᛟ",п:"ᛈ",р:"ᚱ",с:"ᛊ",т:"ᛏ",у:"ᚢ",ф:"ᚠ",х:"ᚺ",ц:"ᛋ",ч:"ᛍ",ш:"ᛎ",щ:"ᛯ",ъ:"ᛪ",ы:"ᛦ",ь:"ᛧ",э:"ᛠ",ю:"ᛡ",я:"ᛣ"};
@@ -286,9 +301,9 @@
     const dragonGlyphs = {а:"𒀀", б:"𒀁", в:"𒀂", г:"𒀃", д:"𒀄", е:"𒀅", ё:"𒀆", ж:"𒀇", з:"𒀈", и:"𒀉", й:"𒀊", к:"𒀋", л:"𒀌", м:"𒀍", н:"𒀎", о:"𒀏", п:"𒀐", р:"𒀑", с:"𒀒", т:"𒀓", у:"𒀔", ф:"𒀕", х:"𒀖", ц:"𒀗", ч:"𒀘", ш:"𒀙", щ:"𒀚", ъ:"𒀛", ы:"𒀜", ь:"𒀝", э:"𒀞", ю:"𒀟", я:"𒀠"};
 
     const celestialGlyphs = {
-        а:"𐡀", б:"𐡁", в:"𐡅", г:"𐡂", д:"𐡃", е:"𐡄", ё:"𝔼", ж:"𐡆", з:"𐡈", и:"𐡉", й:"𝕀",
-        к:"𐡊", л:"𐡋", м:"𐡌", н:"𐡍", о:"𐡏", п:"𐡐", р:"𐡓", с:"𐡔", т:"𐡕", у:"𐡖",
-        ф:"𐡗", х:"𐡘", ц:"𐡙", ч:"ℭ", ш:"𝕊", щ:"𝕊", ъ:"𝕋", ы:"𝕐", ь:"𝕋", э:"𝔼", ю:"𝕌", я:"𝔄"
+        а:"𐡀", б:"𐡁", в:"𐡅", г:"𐡂", д:"𐡃", е:"𐡄", ё:"𐡟", ж:"𐡆", з:"𐡈", и:"𐡉", й:"𐡝",
+        к:"𐡊", л:"𐡋", м:"𐡌", н:"𐡍", о:"𐡏", п:"𐡐", р:"𐡓", с:"𐡔", т:"𐡕", у:"𐡜",
+        ф:"𐡗", х:"𐡘", ц:"𐡙", ч:"𐡞", ш:"𐡑", щ:"𐡇", ъ:"𐡎", ы:"𐡛", ь:"𐡛", э:"𐭪", ю:"𐭫", я:"𐭮"
     };
 
     function reverse(obj) {
@@ -302,7 +317,7 @@
     const dragonReverse = reverse(dragonGlyphs);
     const celestialReverse = reverse(celestialGlyphs);
 
-    /* ==================== ЗВУЧАНИЯ ==================== */
+    /* ЗВУЧАНИЯ (без изменений) */
     const infernalSound = {а:"kha",б:"ba",в:"vakh",г:"gar",д:"dakh",е:"ekh",ё:"iokh",ж:"zhak",з:"zhar",и:"ikh",й:"yikh",к:"khor",л:"lakh",м:"makh",н:"nakh",о:"okh",п:"pakh",р:"rakh",с:"sakh",т:"thak",у:"ukh",ф:"fakh",х:"khra",ц:"tsakh",ч:"chak",ш:"shakh",щ:"shrak",ъ:"",ы:"ykh",ь:"",э:"ekh",ю:"yukh",я:"yakh"};
     const abyssalSound = {а:"grr",б:"brru",в:"vrru",г:"grru",д:"drru",е:"eh",ё:"ioh",ж:"zhrr",з:"zrr",и:"ih",й:"irh",к:"krru",л:"lrru",м:"mrru",н:"nrru",о:"oh",п:"prru",р:"rrra",с:"srru",т:"trru",у:"uh",ф:"frru",х:"khrra",ц:"tsrru",ч:"chrru",ш:"shrru",щ:"shrrra",ъ:"",ы:"rru",ь:"",э:"eh",ю:"rru",я:"rra"};
     const dwarfSound = {а:"ar",б:"bar",в:"var",г:"gar",д:"dur",е:"er",ё:"or",ж:"zor",з:"zur",и:"ir",й:"ir",к:"kar",л:"lor",м:"mor",н:"nar",о:"or",п:"par",р:"ruk",с:"skar",т:"tor",у:"ur",ф:"far",х:"khar",ц:"kar",ч:"chor",ш:"shar",щ:"shor",ъ:"",ы:"yr",ь:"",э:"er",ю:"ur",я:"ar"};
@@ -400,6 +415,7 @@
         }
 
         let words = read.split(/\s+/).filter(w => w).map(w => w.slice(0,6)).join(" ");
+
         document.getElementById("output").innerText = glyphText;
         document.getElementById("reading").innerText = isGlyphInput ? "Перевод на русский: " + russian : "Звучание: " + words;
 
@@ -413,7 +429,9 @@
             infoText = "Письменность: Эльфийская | Диалект: " + names[mode];
         } else if (mode === "deep") infoText = "Глубинная речь | Письменности нет";
         else if (mode === "celestial") infoText = "Письменность: Небесная";
-        document.getElementById("info").innerText = infoText;
+        else if (mode === "dragon") infoText = "Письменность: Драконья | Диалект: Драконий";
+
+        document.getElementById("info").innerHTML = infoText ? `<span>${infoText}</span>` : "";
     }
 
     function buildAlphabet() {
@@ -467,7 +485,7 @@
         document.getElementById("input").value = "";
         document.getElementById("output").innerText = "";
         document.getElementById("reading").innerText = "";
-        document.getElementById("info").innerText = "";
+        document.getElementById("info").innerHTML = "";
     }
 
     window.onload = () => setMode("infernal");
